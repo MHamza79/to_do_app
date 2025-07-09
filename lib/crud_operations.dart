@@ -1,27 +1,26 @@
 class Task {
-
   final String title;
   final DateTime? reminder;
-  Task({required this.reminder,required this.title});
+  final String id;
 
+  Task({required this.title, this.reminder, required this.id});
+
+  Map<String, dynamic> toMap() => {
+        'title': title,
+        'reminder': reminder?.toIso8601String(),
+      };
+
+  factory Task.fromMap(String id, Map<String, dynamic> map) {
+    return Task(
+      id: id,
+      title: map['title'],
+      reminder: map['reminder'] != null
+          ? DateTime.parse(map['reminder'])
+          : null,
+    );
+  }
 }
 
-class CrudOperations {
-  List<Task> tasks=[];
-  
-  void create_task(String task,{DateTime? datetime}){
-     tasks.add(Task(reminder: datetime, title: task));
-  }
 
-  void delete_task(int index){
-    if (index>=0 && index<tasks.length){
-      tasks.removeAt(index);
-    }
-  
-  }
-  List<Task> get_tasks(){
-    return tasks;
-  }
-  
-}
+
 
