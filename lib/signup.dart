@@ -24,7 +24,10 @@ class _AuthPageState extends State<AuthPage> {
     super.dispose();
   }
 
-  void _showSnackBar(String message, {Color backgroundColor = Colors.redAccent}) {
+  void _showSnackBar(
+    String message, {
+    Color backgroundColor = Colors.redAccent,
+  }) {
     if (mounted) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -33,7 +36,9 @@ class _AuthPageState extends State<AuthPage> {
           backgroundColor: backgroundColor,
           behavior: SnackBarBehavior.floating, // Makes it float above content
           margin: const EdgeInsets.all(16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           duration: const Duration(seconds: 3),
         ),
       );
@@ -42,10 +47,7 @@ class _AuthPageState extends State<AuthPage> {
 
   void _navigateToTaskScreen() {
     if (mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) =>  TaskScreen()),
-      );
+      Navigator.pushReplacementNamed(context, '/tasks');
     }
   }
 
@@ -68,12 +70,21 @@ class _AuthPageState extends State<AuthPage> {
 
     try {
       if (_isLogin) {
-        await _auth.signInWithEmailAndPassword(email: email, password: password);
+        await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
       } else {
-        await _auth.createUserWithEmailAndPassword(email: email, password: password);
+        await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
       }
       _navigateToTaskScreen();
-      _showSnackBar('Successfully ${_isLogin ? 'signed in' : 'signed up'}!', backgroundColor: Colors.green);
+      _showSnackBar(
+        'Successfully ${_isLogin ? 'signed in' : 'signed up'}!',
+        backgroundColor: Colors.green,
+      );
     } on FirebaseAuthException catch (e) {
       String message;
       if (e.code == 'user-not-found') {
@@ -147,10 +158,9 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Lighter background
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // Background gradient or pattern (optional, for visual appeal)
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -227,27 +237,35 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                         const SizedBox(height: 30),
                         _isLoading
-                            ? const CircularProgressIndicator(color: Colors.teal)
+                            ? const CircularProgressIndicator(
+                              color: Colors.teal,
+                            )
                             : SizedBox(
-                                width: double.infinity, // Make button fill width
-                                child: ElevatedButton(
-                                  onPressed: _submit,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.teal, // Primary button color
-                                    padding: const EdgeInsets.symmetric(vertical: 16),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    elevation: 8,
-                                    shadowColor: Colors.teal.withOpacity(0.5),
+                              width: double.infinity, // Make button fill width
+                              child: ElevatedButton(
+                                onPressed: _submit,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Colors.teal, // Primary button color
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
                                   ),
-                                  child: Text(
-                                    _isLogin ? 'Sign In' : 'Sign Up',
-                                    style: const TextStyle(
-                                        fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  elevation: 8,
+                                  shadowColor: Colors.teal.withOpacity(0.5),
+                                ),
+                                child: Text(
+                                  _isLogin ? 'Sign In' : 'Sign Up',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
+                            ),
                         const SizedBox(height: 10),
                         TextButton(
                           onPressed: () {
@@ -257,39 +275,42 @@ class _AuthPageState extends State<AuthPage> {
                             _isLogin
                                 ? 'Don’t have an account? Sign Up'
                                 : 'Already have an account? Sign In',
-                            style: const TextStyle(color: Colors.blueAccent, fontSize: 15),
+                            style: const TextStyle(
+                              color: Colors.blueAccent,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
                         Divider(color: Colors.grey.shade300),
                         const SizedBox(height: 20),
-                        SizedBox(
-                          width: double.infinity, // Make button fill width
-                          child: ElevatedButton.icon(
-                            onPressed: (){},
-                           // _signInWithGoogle,
-                            // icon: Image.asset(
-                            //   'assets/google_logo.png', // Ensure this path is correct
-                            //   height: 24,
-                            //   width: 24,
-                            // ),
-                            label: const Text(
-                              'Continue with Google',
-                              style: TextStyle(fontSize: 16, color: Colors.blueGrey),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.blueGrey,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                side: BorderSide(color: Colors.grey.shade300),
-                              ),
-                              elevation: 3,
-                              shadowColor: Colors.grey.withOpacity(0.3),
-                            ),
-                          ),
-                        ),
+                        // SizedBox(
+                        //   width: double.infinity, // Make button fill width
+                        //   child: ElevatedButton.icon(
+                        //     onPressed: (){},
+                        //    // _signInWithGoogle,
+                        //     // icon: Image.asset(
+                        //     //   'assets/google_logo.png', // Ensure this path is correct
+                        //     //   height: 24,
+                        //     //   width: 24,
+                        //     // ),
+                        //     // label: const Text(
+                        //     //   'Continue with Google',
+                        //     //   style: TextStyle(fontSize: 16, color: Colors.blueGrey),
+                        //     // ),
+                        //     style: ElevatedButton.styleFrom(
+                        //       backgroundColor: Colors.white,
+                        //       foregroundColor: Colors.blueGrey,
+                        //       padding: const EdgeInsets.symmetric(vertical: 14),
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(12),
+                        //         side: BorderSide(color: Colors.grey.shade300),
+                        //       ),
+                        //       elevation: 3,
+                        //       shadowColor: Colors.grey.withOpacity(0.3),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -337,7 +358,10 @@ class _AuthPageState extends State<AuthPage> {
           borderSide: const BorderSide(color: Colors.redAccent, width: 2),
           borderRadius: BorderRadius.circular(12),
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 12,
+        ),
       ),
     );
   }
